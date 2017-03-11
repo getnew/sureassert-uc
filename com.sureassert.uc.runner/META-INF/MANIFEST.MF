@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Sureassert UC Runner
+Bundle-SymbolicName: com.sureassert.uc.runner
+Bundle-Version: 2.0.0.qualifier
+Bundle-Activator: com.sureassert.uc.runner.RunnerActivator
+Bundle-Vendor: Sureassert
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.jdt.core,
+ com.sureassert.uc,
+ com.sureassert.uc.lib,
+ com.sureassert.uc.runtime,
+ org.eclipse.core.resources
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Export-Package: com.sureassert.uc.runner

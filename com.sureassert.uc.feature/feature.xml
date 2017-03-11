@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.sureassert.uc.feature"
+      label="Sureassert UC Engine for Eclipse"
+      version="2.0.0"
+      provider-name="Sureassert">
+
+   <description url="http://www.sureassert.com">
+      Sureassert UC Engine for Eclipse
+   </description>
+
+   <copyright>
+      Copyright 2011 Nathan Dolan.  All rights reserved.
+   </copyright>
+
+   <license>
+      Sureassert UC Engine for Eclipse - License
+Definitions
+&quot;You&quot; and &quot;your&quot; refers to the individual that wishes to use
+the 
+programs.
+&quot;The copyright holder&quot; refers to Nathan Dolan.  
+&quot;Programs&quot; refers to the Sureassert UC Engine for Eclipse.
+&quot;Programs&quot; and &quot;Sureassert UC Engine&quot; does not include the 
+Sureassert UC Annotation package (org.sureassert.uc.annotations)
+which is downloaded and licensed separately.
+&quot;License&quot; refers to your right to use the programs under the
+terms of this agreement. 
+This agreement is governed by the substantive and
+procedural laws of the United Kingdom. You and the copyright
+holder agree to submit to the exclusive jurisdiction of, and
+venue in, the courts of the United Kingdom in any dispute arising
+out of or relating to this agreement. 
+The copyright holder is willing to license the programs to you
+only upon the condition that you accept all of the terms contained
+in this agreement. If you are not willing to be bound by these
+terms, do not download the software. 
+License Rights
+The copyright holder grants you a nonexclusive, non-transferable
+limited license to use the programs for purposes of developing
+your applications.
+If you want to use the programs for any purpose
+other than as expressly permitted under this agreement you must
+contact the copyright holder to obtain the appropriate license.
+Ownership and Restrictions
+The copyright holder retains all ownership and intellectual property
+rights in the programs. You may make a sufficient number of copies
+of the programs for the licensed use by the individual licensed
+user 
+and one copy of the programs for backup purposes.
+You may not: 
+• use the programs for any purpose other than as provided above;
+• distribute the programs; 
+• charge your end users for use of the programs; 
+• remove or modify any program markings or any notice of the
+copyright holder’s proprietary rights; 
+• use the programs to provide third party training on the content
+and/or functionality of the programs unless with prior written
+permission from the copyright holder (contact info@sureassert.com);
+• assign this agreement or give the programs, program access
+or an interest in the programs to any individual or entity; 
+• cause or permit reverse engineering (unless required by law
+for interoperability), disassembly or decompilation of the programs;
+or,
+• disclose results of any program benchmark tests without the
+copyright holder’s prior consent.
+• link software with the programs in any way other than the
+intended use of executing the Sureassert UC Eclipse Builder on
+software being developed by the user.
+Disclaimer of Warranty and Exclusive Remedies
+THE PROGRAMS ARE PROVIDED &quot;AS IS&quot; WITHOUT WARRANTY OF ANY KIND.
+THE COPYRIGHT HOLDER FURTHER DISCLAIMS ALL WARRANTIES, EXPRESS
+AND IMPLIED, INCLUDING WITHOUT LIMITATION, ANY IMPLIED WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NONINFRINGEMENT.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY INDIRECT,
+INCIDENTAL, SPECIAL, PUNITIVE OR CONSEQUENTIAL DAMAGES, OR DAMAGES
+FOR LOSS OF PROFITS, REVENUE, DATA OR DATA USE, INCURRED BY YOU
+OR ANY THIRD PARTY, WHETHER IN AN ACTION IN CONTRACT OR TORT,
+EVEN IF THE COPYRIGHT HOLDER HAS BEEN ADVISED OF THE POSSIBILITY
+OF SUCH DAMAGES.
+Technical Support
+No technical support or updates will be provided to you for the
+programs licensed under this agreement.
+You may use the forums provided at www.sureassert.com to seek
+technical support from the user community.  
+End of Agreement
+You may terminate this agreement by destroying all copies of
+the programs. The copyright holder has the right to terminate
+your right to use the programs if you fail to comply with any
+of the terms of this agreement, in which case you shall destroy
+all copies of the programs. 
+Relationship Between the Parties
+The relationship between you and the copyright holder is that
+of licensee/licensor. Neither party will represent that it has
+any authority to assume or create any obligation, express or
+implied, on behalf of the other party, nor to represent the other
+party as agent, employee, franchisee, or in any other capacity.
+Nothing in this agreement shall be construed to limit either
+party&apos;s right to independently develop or distribute software
+that is functionally similar to the other party&apos;s products, so
+long as proprietary information of the other party is not included
+in such software. 
+Entire Agreement
+You agree that this agreement is the complete agreement for the
+programs and licenses, and this agreement supersedes all prior
+or contemporaneous agreements or representations. If any term
+of this agreement is found to be invalid or unenforceable, the
+remaining provisions will remain effective. 
+Last updated: 23/05/2011
+Should you have any questions concerning this License Agreement
+please contact info@sureassert.com
+   </license>
+
+   <url>
+      <discovery label="Sureassert home page" url="http://www.sureassert.com"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.jdt.debug.ui"/>
+      <import plugin="org.eclipse.pde.ui"/>
+      <import plugin="org.eclipse.debug.core"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.jdt.launching"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.debug.ui"/>
+      <import plugin="org.eclipse.jdt.ui"/>
+   </requires>
+
+   <plugin
+         id="com.sureassert.uc"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.sureassert.uc.runtime"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.sureassert.uc.lib"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.sureassert.uc.runner"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.sureassert.uc.runner.init"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

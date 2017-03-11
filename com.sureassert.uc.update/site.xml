@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/com.sureassert.uc.feature_2.0.0.jar" id="com.sureassert.uc.feature" version="2.0.0">
+      <category name="com.sureassert.uc.update"/>
+   </feature>
+   <category-def name="com.sureassert.uc.update" label="Sureassert UC Updates"/>
+</site>

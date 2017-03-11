@@ -1,0 +1,406 @@
+<?eclipse version="3.4"?>
+<plugin>
+
+	<!-- Natures/Builders -->
+	<extension id="saucBuilder" name="Sureassert UC"
+		point="org.eclipse.core.resources.builders">
+		<builder hasNature="true">
+			<run class="com.sureassert.uc.builder.SAUCBuilder">
+			</run>
+		</builder>
+	</extension>
+	<extension id="saucNature" name="Sureassert UC Nature"
+		point="org.eclipse.core.resources.natures">
+		<runtime>
+			<run class="com.sureassert.uc.builder.SAUCNature">
+			</run>
+		</runtime>
+		<builder id="com.sureassert.uc.saucBuilder">
+		</builder>
+	</extension>
+
+	<!-- Popup Menus -->
+	<extension point="org.eclipse.ui.popupMenus">
+		<objectContribution adaptable="true"
+			objectClass="org.eclipse.core.resources.IProject" nameFilter="*"
+			id="sureassert.projectmenu.contibution1">
+			<menu id="sureassert.projectmenu.subMenu" label="Sureassert UC"
+				icon="icons/UC.png" path="additions">
+				<separator name="group1" />
+			</menu>
+			<action style="push" label="Enable"
+				class="com.sureassert.uc.builder.ToggleNatureAction" menubarPath="sureassert.projectmenu.subMenu/group1"
+				enablesFor="+" id="sureassert.addRemoveNatureAction">
+			</action>
+		</objectContribution>
+
+		<objectContribution adaptable="true"
+			objectClass="org.eclipse.core.resources.IProject" nameFilter="*"
+			id="sureassert.projectmenu.refreshProjectAction">
+			<action id="sureassert.refreshProjectAction" label="Sureassert UC Refresh"
+				icon="icons/refresh.png" menubarPath="additions"
+				class="com.sureassert.uc.builder.RefreshActionDelegate"
+				definitionId="sureassert.uc.refreshProjectAction.def" enablesFor="+">
+			</action>
+		</objectContribution>
+		<objectContribution adaptable="true"
+			objectClass="org.eclipse.core.resources.IFile" nameFilter="*.java"
+			id="sureassert.projectmenu.refreshFileAction">
+			<action id="sureassert.refreshFileAction" label="Sureassert UC Refresh"
+				icon="icons/refresh.png" menubarPath="additions"
+				class="com.sureassert.uc.builder.RefreshActionDelegate"
+				definitionId="sureassert.uc.refreshFileAction.def" enablesFor="+">
+			</action>
+		</objectContribution>
+	</extension>
+
+	<extension point="org.eclipse.ui.commands">
+		<command id="sureassert.sourcemenu.addUseCaseAction" name="Add UseCase">
+		</command>
+	</extension>
+
+	<extension point="org.eclipse.ui.bindings">
+		<key commandId="sureassert.sourcemenu.addUseCaseAction" contextId="org.eclipse.ui.contexts.window"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="CTRL+\">
+		</key>
+	</extension>
+
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution allPopups="true"
+			locationURI="popup:org.eclipse.jdt.ui.source.menu?after=additions">
+			<separator name="mySeparator" visible="true">
+			</separator>
+			<command commandId="sureassert.sourcemenu.addUseCaseAction"
+				style="push">
+				<visibleWhen>
+					<or>
+						<with variable="activeMenuSelection">
+							<iterate>
+								<or>
+									<adapt type="org.eclipse.jdt.core.IJavaProject" />
+									<adapt type="org.eclipse.jdt.core.IPackageFragment" />
+									<adapt type="org.eclipse.jdt.core.IPackageFragmentRoot" />
+									<adapt type="org.eclipse.jdt.core.ICompilationUnit" />
+								</or>
+							</iterate>
+						</with>
+						<with variable="activeEditorId">
+							<equals value="org.eclipse.jdt.ui.CompilationUnitEditor" />
+						</with>
+					</or>
+				</visibleWhen>
+			</command>
+			<separator name="additions" visible="false">
+			</separator>
+		</menuContribution>
+	</extension>
+
+	<extension point="org.eclipse.ui.handlers">
+		<handler commandId="sureassert.sourcemenu.addUseCaseAction"
+			class="com.sureassert.uc.builder.InsertUseCaseActionHandler">
+		</handler>
+	</extension>
+
+	<!-- Launches -->
+	<extension point="org.eclipse.debug.ui.launchShortcuts">
+		<shortcut label="Sureassert UC" icon="icons/UC.png" modes="run, debug"
+			class="com.sureassert.uc.builder.SaUCApplicationLaunchShortcut" id="saUCLaunchShortcut">
+			<contextualLaunch>
+				<enablement>
+					<with variable="selection">
+						<count value="1" />
+						<iterate>
+							<or>
+								<test property="org.eclipse.debug.ui.matchesPattern" value="*.java" />
+								<test property="org.eclipse.debug.ui.matchesPattern" value="*.class" />
+								<instanceof value="org.eclipse.jdt.core.IJavaProject" />
+							</or>
+						</iterate>
+					</with>
+				</enablement>
+			</contextualLaunch>
+		</shortcut>
+	</extension>
+
+
+
+	<!-- Markers -->
+	<extension id="saucProblem" name="Sureassert UC Problem"
+		point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.core.resources.problemmarker" />
+		<super type="org.eclipse.core.resources.textmarker">
+		</super>
+		<persistent value="true">
+		</persistent>
+	</extension>
+	<extension id="saucInfo" name="Sureassert UC Info"
+		point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.core.resources.textmarker"></super>
+		<persistent value="true">
+		</persistent>
+	</extension>
+	<extension id="sajuProblem" name="Sureassert JUnit Problem"
+		point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.core.resources.problemmarker" />
+		<persistent value="true">
+		</persistent>
+	</extension>
+	<extension id="sajuInfo" name="Sureassert JUnit Info"
+		point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.core.resources.textmarker"></super>
+		<persistent value="true">
+		</persistent>
+	</extension>
+	<extension id="saWarning" name="Sureassert UC Warning"
+		point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.core.resources.problemmarker">
+		</super>
+		<super type="org.eclipse.core.resources.textmarker">
+		</super>
+		<persistent value="true">
+		</persistent>
+	</extension>
+	<extension id="suacCoverageReport" name="Sureassert UC Coverage Report"
+		point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.core.resources.problemmarker" />
+		<super type="org.eclipse.core.resources.textmarker">
+		</super>
+		<persistent value="true">
+		</persistent>
+	</extension>
+	<extension id="suacCoverageStat" name="Sureassert UC Coverage Statistic"
+		point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.core.resources.textmarker">
+		</super>
+		<persistent value="true">
+		</persistent>
+	</extension>
+	<extension point="org.eclipse.ui.editors.annotationTypes">
+		<type markerType="com.sureassert.uc.saucProblem" name="sureassert.problemSpec">
+		</type>
+	</extension>
+	<extension point="org.eclipse.ui.editors.annotationTypes">
+		<type markerType="com.sureassert.uc.sajuProblem" name="sureassert.problemSpec">
+		</type>
+	</extension>
+	<extension point="org.eclipse.ui.editors.annotationTypes">
+		<type markerType="com.sureassert.uc.suacCoverageReport" name="sureassert.problemSpec">
+		</type>
+	</extension>
+	<extension point="org.eclipse.ui.editors.annotationTypes">
+		<type markerType="com.sureassert.uc.suacCoverageStat" name="sureassert.problemSpec">
+		</type>
+	</extension>
+	<extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
+		<specification annotationType="sureassert.problemSpec"
+			icon="icons/error.gif" textPreferenceKey="sureassert.problemSpec.Indication"
+			textPreferenceValue="true" overviewRulerPreferenceKey="sureassert.problemSpec.InOverviewRuler"
+			overviewRulerPreferenceValue="true" verticalRulerPreferenceKey="sureassert.problemSpec.InVerticalRuler"
+			verticalRulerPreferenceValue="true" highlightPreferenceKey="sureassert.problemSpec.Highlighting"
+			highlightPreferenceValue="false" colorPreferenceKey="sureassert.problemSpec.IndicationColor"
+			colorPreferenceValue="255,0,0" presentationLayer="10"
+			showInNextPrevDropdownToolbarAction="false" includeOnPreferencePage="true"
+			isGoToPreviousNavigationTargetKey="sureassert.problemSpec.GoToPreviousNavigationTarget"
+			label="Sureassert UC Problem" showInNextPrevDropdownToolbarActionKey="sureassert.problemSpec.ShowInNextPrevDropdownToolbarAction"
+			isGoToNextNavigationTargetKey="sureassert.problemSpec.RecordGoToNextNavigationTarget">
+		</specification>
+	</extension>
+	<extension point="org.eclipse.ui.editors.annotationTypes">
+		<type markerType="com.sureassert.uc.saucInfo" name="sureassert.infoSpec">
+		</type>
+	</extension>
+	<extension point="org.eclipse.ui.editors.annotationTypes">
+		<type markerType="com.sureassert.uc.sajuInfo" name="sureassert.infoSpec">
+		</type>
+	</extension>
+	<extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
+		<specification annotationType="sureassert.infoSpec"
+			icon="icons/info.gif" textPreferenceKey="sureassert.infoSpec.Indication"
+			textPreferenceValue="true" overviewRulerPreferenceKey="sureassert.infoSpec.InOverviewRuler"
+			overviewRulerPreferenceValue="false" verticalRulerPreferenceKey="sureassert.infoSpec.InVerticalRuler"
+			verticalRulerPreferenceValue="true" highlightPreferenceKey="sureassert.infoSpec.Highlighting"
+			highlightPreferenceValue="false" colorPreferenceKey="sureassert.infoSpec.IndicationColor"
+			colorPreferenceValue="255,0,0" presentationLayer="1"
+			showInNextPrevDropdownToolbarAction="false" includeOnPreferencePage="true"
+			isGoToPreviousNavigationTargetKey="sureassert.infoSpec.GoToPreviousNavigationTarget"
+			label="Sureassert UC Info" showInNextPrevDropdownToolbarActionKey="sureassert.infoSpec.ShowInNextPrevDropdownToolbarAction"
+			isGoToNextNavigationTargetKey="sureassert.infoSpec.RecordGoToNextNavigationTarget">
+		</specification>
+	</extension>
+
+	<!-- Preferences page -->
+	<extension point="org.eclipse.ui.preferencePages">
+		<page id="com.sureassert.uc.preferences.main" class="com.sureassert.uc.SaUCPreferencePage"
+			name="Sureassert UC">
+		</page>
+	</extension>
+
+	<!-- Startup -->
+	<extension point="org.eclipse.ui.startup">
+		<startup class="com.sureassert.uc.UCPluginStartup"></startup>
+	</extension>
+
+	<!-- Editor text annotations -->
+	<extension id="codeCoverage" name="Sureassert UC Coverage"
+		point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.core.resources.textmarker"></super>
+		<persistent value="true">
+		</persistent>
+	</extension>
+
+	<extension id="codePartialCoverage" name="Sureassert UC Patial Coverage"
+		point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.core.resources.textmarker"></super>
+		<persistent value="true">
+		</persistent>
+	</extension>
+
+	<extension id="coverageRequired" name="Sureassert UC Coverage Required"
+		point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.core.resources.textmarker"></super>
+		<persistent value="true">
+		</persistent>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.editors.annotationTypes">
+		<type markerType="com.sureassert.uc.codeCoverage" name="sureassert.coverageSpec">
+		</type>
+	</extension>
+
+	<extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
+		<specification annotationType="sureassert.coverageSpec"
+			textPreferenceKey="sureassert.coverageSpec.Indication"
+			textPreferenceValue="true" overviewRulerPreferenceKey="sureassert.coverageSpec.InOverviewRuler"
+			overviewRulerPreferenceValue="false"
+			verticalRulerPreferenceKey="sureassert.coverageSpec.InVerticalRuler"
+			verticalRulerPreferenceValue="true" highlightPreferenceKey="sureassert.coverageSpec.Highlighting"
+			highlightPreferenceValue="true" colorPreferenceKey="sureassert.coverageSpec.IndicationColor"
+			colorPreferenceValue="242, 255, 242" presentationLayer="1"
+			showInNextPrevDropdownToolbarAction="false" includeOnPreferencePage="true"
+			isGoToPreviousNavigationTargetKey="sureassert.coverageSpec.GoToPreviousNavigationTarget"
+			label="Sureassert UC: Code Covered"
+			showInNextPrevDropdownToolbarActionKey="sureassert.coverageSpec.ShowInNextPrevDropdownToolbarAction"
+			isGoToNextNavigationTargetKey="sureassert.coverageSpec.RecordGoToNextNavigationTarget">
+		</specification>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.editors.annotationTypes">
+		<type markerType="com.sureassert.uc.codePartialCoverage" name="sureassert.partialCoverageSpec">
+		</type>
+	</extension>
+
+	<extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
+		<specification annotationType="sureassert.partialCoverageSpec"
+			textPreferenceKey="sureassert.partialCoverageSpec.Indication"
+			textPreferenceValue="true" overviewRulerPreferenceKey="sureassert.partialCoverageSpec.InOverviewRuler"
+			overviewRulerPreferenceValue="false"
+			verticalRulerPreferenceKey="sureassert.partialCoverageSpec.InVerticalRuler"
+			verticalRulerPreferenceValue="true"
+			highlightPreferenceKey="sureassert.partialCoverageSpec.Highlighting"
+			highlightPreferenceValue="true"
+			colorPreferenceKey="sureassert.partialCoverageSpec.IndicationColor"
+			colorPreferenceValue="255, 255, 215" presentationLayer="1"
+			showInNextPrevDropdownToolbarAction="false" includeOnPreferencePage="true"
+			isGoToPreviousNavigationTargetKey="sureassert.partialCoverageSpec.GoToPreviousNavigationTarget"
+			label="Sureassert UC: Code Partially Covered"
+			showInNextPrevDropdownToolbarActionKey="sureassert.partialCoverageSpec.ShowInNextPrevDropdownToolbarAction"
+			isGoToNextNavigationTargetKey="sureassert.partialCoverageSpec.RecordGoToNextNavigationTarget">
+		</specification>
+	</extension>
+
+
+
+	<extension id="codeStubbed" name="Sureassert UC Stubbed Code"
+		point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.core.resources.textmarker"></super>
+		<persistent value="true">
+		</persistent>
+	</extension>
+
+	<extension point="org.eclipse.ui.editors.annotationTypes">
+		<type markerType="com.sureassert.uc.codeStubbed" name="sureassert.codeStubbedSpec">
+		</type>
+	</extension>
+
+	<extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
+		<specification annotationType="sureassert.codeStubbedSpec"
+			textPreferenceKey="sureassert.codeStubbed.Indication"
+			textPreferenceValue="true" overviewRulerPreferenceKey="sureassert.codeStubbedSpec.InOverviewRuler"
+			overviewRulerPreferenceValue="false"
+			verticalRulerPreferenceKey="sureassert.codeStubbedSpec.InVerticalRuler"
+			verticalRulerPreferenceValue="true"
+			highlightPreferenceKey="sureassert.codeStubbedSpec.Highlighting"
+			highlightPreferenceValue="true" colorPreferenceKey="sureassert.codeStubbedSpec.IndicationColor"
+			colorPreferenceValue="255, 245, 220" presentationLayer="1"
+			showInNextPrevDropdownToolbarAction="false" includeOnPreferencePage="true"
+			isGoToPreviousNavigationTargetKey="sureassert.codeStubbedSpec.GoToPreviousNavigationTarget"
+			label="Sureassert UC: Code Stubbed"
+			showInNextPrevDropdownToolbarActionKey="sureassert.codeStubbedSpec.ShowInNextPrevDropdownToolbarAction"
+			isGoToNextNavigationTargetKey="sureassert.codeStubbedSpec.RecordGoToNextNavigationTarget">
+		</specification>
+	</extension>
+
+	<extension point="org.eclipse.ui.editors.annotationTypes">
+		<type markerType="com.sureassert.uc.coverageRequired" name="sureassert.coverageRequiredSpec">
+		</type>
+	</extension>
+
+	<extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
+		<specification annotationType="sureassert.coverageRequiredSpec"
+			textPreferenceKey="sureassert.coverageRequiredSpec.Indication"
+			textPreferenceValue="true" overviewRulerPreferenceKey="sureassert.coverageRequiredSpec.InOverviewRuler"
+			overviewRulerPreferenceValue="false"
+			verticalRulerPreferenceKey="sureassert.coverageRequiredSpec.InVerticalRuler"
+			verticalRulerPreferenceValue="true"
+			highlightPreferenceKey="sureassert.coverageRequiredSpec.Highlighting"
+			highlightPreferenceValue="true"
+			colorPreferenceKey="sureassert.coverageRequiredSpec.IndicationColor"
+			colorPreferenceValue="255, 230, 230" presentationLayer="2"
+			showInNextPrevDropdownToolbarAction="false" includeOnPreferencePage="true"
+			isGoToPreviousNavigationTargetKey="sureassert.coverageRequiredSpec.GoToPreviousNavigationTarget"
+			label="Sureassert UC: Coverage Required"
+			showInNextPrevDropdownToolbarActionKey="sureassert.coverageRequiredSpec.ShowInNextPrevDropdownToolbarAction"
+			isGoToNextNavigationTargetKey="sureassert.coveragRequiredeSpec.RecordGoToNextNavigationTarget">
+		</specification>
+	</extension>
+
+	<extension point="com.sureassert.uc.runtime.coverage">
+		<client class="com.sureassert.uc.builder.SAUCEditorCoverageListenner">
+		</client>
+	</extension>
+
+	<extension point="com.sureassert.uc.runtime.ucReexecutor">
+		<client class="com.sureassert.uc.builder.UCReexecutor">
+		</client>
+	</extension>
+
+	<extension id="saucRefreshProvider" point="org.eclipse.core.resources.refreshProviders">
+		<refreshProvider class="com.sureassert.uc.builder.SaUCRefreshProvider">
+		</refreshProvider>
+	</extension>
+
+	<!-- File decorators -->
+	<extension point="org.eclipse.ui.decorators">
+		<decorator id="com.sureassert.uc.coverageDecorator" label="Sureassert Code Coverage Resource Decorator"
+			state="false" class="com.sureassert.uc.CoverageDecorator"
+			objectClass="org.eclipse.core.resources.IResource" adaptable="true"
+			lightweight="true">
+			<enablement>
+				<objectClass name="org.eclipse.core.resources.IResource" />
+			</enablement>
+		</decorator>
+	</extension>
+
+	<extension point="org.eclipse.ui.actionSets">
+		<actionSet label="Sample Action Set" visible="false"
+			id="org.eclipse.faq.examples.actionSet">
+			<action class="com.sureassert.uc.ToggleCoverageDisplayAction"
+				toolbarPath="Normal/exampleGroup" icon="icons/UC.png" tooltip="Sample toolbar action">
+			</action>
+		</actionSet>
+
+	</extension>
+
+</plugin>
